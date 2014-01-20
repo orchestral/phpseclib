@@ -21,10 +21,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -46,7 +46,11 @@
  *
  * @access private
  */
-define('CRYPT_RANDOM_IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+defined('CRYPT_RANDOM_IS_WINDOWS') || define('CRYPT_RANDOM_IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+
+if (function_exists('crypt_random_string')) {
+    return ;
+}
 
 /**
  * Generate a random string.
@@ -167,9 +171,9 @@ function crypt_random_string($length)
             ini_set('session.use_cookies', $old_use_cookies);
             session_cache_limiter($old_session_cache_limiter);
         } else {
-           if (isset($_OLD_SESSION)) {
-               $_SESSION = $_OLD_SESSION;
-               unset($_OLD_SESSION);
+            if (isset($_OLD_SESSION)) {
+                $_SESSION = $_OLD_SESSION;
+                unset($_OLD_SESSION);
             } else {
                 unset($_SESSION);
             }
