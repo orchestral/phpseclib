@@ -45,7 +45,11 @@
  *
  * @access private
  */
-define('CRYPT_RANDOM_IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+defined('CRYPT_RANDOM_IS_WINDOWS') || define('CRYPT_RANDOM_IS_WINDOWS', strtoupper(substr(PHP_OS, 0, 3)) === 'WIN');
+
+if (function_exists('crypt_random_string')) {
+    return ;
+}
 
 /**
  * Generate a random string.
@@ -164,9 +168,9 @@ function crypt_random_string($length)
             ini_set('session.use_cookies', $old_use_cookies);
             session_cache_limiter($old_session_cache_limiter);
         } else {
-           if ($_OLD_SESSION !== false) {
-               $_SESSION = $_OLD_SESSION;
-               unset($_OLD_SESSION);
+            if ($_OLD_SESSION !== false) {
+                $_SESSION = $_OLD_SESSION;
+                unset($_OLD_SESSION);
             } else {
                 unset($_SESSION);
             }
